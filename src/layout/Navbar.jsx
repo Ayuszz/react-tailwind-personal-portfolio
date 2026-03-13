@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button } from "@/components/Button";
+// import { Button } from "@/components/Button";
 import { Menu,X } from "lucide-react";
 
 
@@ -44,15 +44,14 @@ export const Navbar = () => {
                 </div>
 
                 <div className="hidden md:block">
-                    <Button size="small">
+                    {/* <Button size="small">
                           Contact Me
-                    </Button>
+                    </Button> */}
                 </div>
 
                  {/* Mobile Menu Button */}
                 <button className="md:hidden p-2 text-foreground cursor-pointer" onClick={() => setIsMobileMenuOpen(prev => !prev)}>
                 {isMobileMenuOpen ? <X size={24}/> : <Menu size={24} />}
-
                 </button>
             </nav>
 
@@ -67,9 +66,9 @@ export const Navbar = () => {
                            {link.label}
                        </a>
                         ))}
-                        <Button onClick={()=> setIsMobileMenuOpen(false)} size="small">
+                        {/* <Button onClick={()=> setIsMobileMenuOpen(false)} size="small">
                           Contact Me
-                    </Button>
+                    </Button> */}
                 </div>
             </div>
             )}

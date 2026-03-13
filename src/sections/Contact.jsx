@@ -1,5 +1,5 @@
 import { Mail, MapPin, Phone, Send,CheckCircle,AlertCircle} from "lucide-react"
-import { Button } from "@/components/Button"
+// import { Button } from "@/components/Button"
 import { useState } from "react"
 import emailJs from "@emailjs/browser"
 
@@ -135,10 +135,10 @@ export const Contact = () => {
                                     className="w-full px-4 py-3 bg-surface rounded-xl border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all resize-vertical" 
                                 />
                             </div>
-                            <Button className="w-full liquid-glass h-12 text-sm italic text-muted-foreground hover:text-foreground hover:shadow-lg" size="lg" type="submit" disabled={isLoading}>
+                            <button className="w-full liquid-glass h-12 text-sm italic text-muted-foreground hover:text-foreground hover:shadow-lg rounded-full font-medium px-6 py-3" type="submit" disabled={isLoading}>
                                 Send message
                                 <Send className="w-4 h-4 ml-1"/>
-                            </Button>
+                            </button>
                             {submitStatus.message && (
                                 <div className={`p-3 rounded-xl ${
                                     submitStatus.type === 'success' ? 'bg-green-500/10 border border-green-500/30 text-green-400' : 

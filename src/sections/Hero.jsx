@@ -1,4 +1,4 @@
-import { Button } from "../components/Button";
+// import { Button } from "../components/Button";
 import { ArrowRight, Download, Github, Instagram, Linkedin } from "lucide-react";
 import { AnimatedBorderButton } from "../components/AnimatedBoarderButton";
 import { ChevronDown } from "lucide-react";
@@ -81,9 +81,9 @@ export const Hero = () => {
 
             {/* CTAs */}
             <div className="flex flex-wrap gap-4 animate-fade-in animation-delay-300">
-              <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 px-8">
+              <button className="bg-primary text-primary-foreground hover:bg-primary/90 px-8 py-3 rounded-full font-medium transition-all duration-200 text-base">
                 Contact Me <ArrowRight className="w-5 h-5 ml-2" />
-              </Button>
+              </button>
               <AnimatedBorderButton />
             </div>
 

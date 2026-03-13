@@ -59,7 +59,9 @@ export const About = () => {
                   <div className="glass rounded-2xl p-6 glow-border animate-fade-in animation-delay-300">
                     <p className="text-lg font-medium itlic text-foreground">
                         HIRING ME WILL BE BENEFICIAL TO YOU!!<br/>
-                        ..as i'm a versatie and a vibe coder who gets his work done within the time oeriod and contribute to the management
+
+                        
+                        ..as i'm a versatile and a vibe coder who gets his work done within the time period and contribute to the management
                     </p>
                   </div>
               </div>

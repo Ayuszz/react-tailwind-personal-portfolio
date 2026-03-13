@@ -1,4 +1,4 @@
-import { Button } from "../components/Button";
+// import { Button } from "../components/Button";
 import { Github, ExternalLink, Folder, Eye } from "lucide-react";
 
 const projects = [
@@ -77,9 +77,9 @@ export const Projects = () => {
                   ))}
                 </div>
                 
-                <Button size="small" className="mt-4">
+                <button className="mt-4 px-4 py-2 rounded-full font-medium text-sm bg-primary/10 text-primary hover:bg-primary transition-all">
                   View Project <Eye className="w-4 h-4 ml-2" />
-                </Button>
+                </button>
               </div>
             </div>
           ))}
