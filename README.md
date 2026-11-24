@@ -1,16 +1,38 @@
-# React + Vite
+# Ayush Mohanty — Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Personal developer portfolio built with React 19, Vite and Tailwind CSS v4. Live at
+[react-tailwind-personal-portfolio-u.vercel.app](https://react-tailwind-personal-portfolio-u.vercel.app/).
 
-Currently, two official plugins are available:
+## Run locally
+```bash
+npm install
+npm run dev      # http://localhost:5173
+npm run build    # production build in /dist
+```
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Editing content
+**All text, links, stats, experience, projects (with case studies), skills and education live in
+`src/portfolio.config.js`.** Components only read from it, so updating after a new CV is a one-file edit.
 
-## React Compiler
+- Photo: `public/ayush.jpg` (set `photo` in the config)
+- CV: `public/Ayush_Mohanty_CV.pdf` (set `resume` / `resumeFileName`)
+- Hero background: `public/hero-bg.jpg`
+- Project screenshots: `public/*.jpg`, referenced by each project's `image`
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Features
+- Contact Me menu: Email (Gmail compose), WhatsApp, and Call with a copy-number fallback
+- One-click CV download
+- "Tools I work with" marquee that expands into a vertical list
+- Clickable project cards that open a full case study (problem, data, build steps, metrics, findings, use cases)
+- Contact form: sends via EmailJS when keys are set, otherwise hands off to Gmail / the visitor's email app
 
-## Expanding the ESLint configuration
+### Contact form (optional)
+Add these in Vercel → Project → Settings → Environment Variables (or a local `.env`):
+```
+VITE_EMAILJS_SERVICE_ID=...
+VITE_EMAILJS_TEMPLATE_ID=...
+VITE_EMAILJS_PUBLIC_KEY=...
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Deploy
+Connected to Vercel — every push to `main` redeploys automatically.

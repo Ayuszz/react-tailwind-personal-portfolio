@@ -1,177 +1,180 @@
-import { Mail, MapPin, Phone, Send,CheckCircle,AlertCircle} from "lucide-react"
-// import { Button } from "@/components/Button"
-import { useState } from "react"
-import emailJs from "@emailjs/browser"
+import { Mail, MapPin, Phone, Send, CheckCircle, AlertCircle, Linkedin, Github, MessageCircle } from "lucide-react";
+import { useState } from "react";
+import emailJs from "@emailjs/browser";
+import { SectionHeader } from "../components/SectionHeader";
+import { profile, socials, contactLinks } from "../portfolio.config";
+import { CallPanel } from "../components/CallPanel";
 
 const contactInfo = [
-    {
-        icon: Mail,
-        label: "Email",
-        value: "ayushmohanty5800@gmail.com",
-        href: "mailto:ayushmohanty5800@gmail.com"
-    },
-    {
-        icon: Phone,
-        label: "Phone",
-        value: "+91 9337044872",
-        href: "tel:+919337044872"
-    },
-    {
-        icon: MapPin,
-        label: "Location",
-        value: "Bangalore, India",
-        href: "https://maps.google.com/?q=Kormangala"
-    },
-]
+  { icon: Mail, label: "Email", value: socials.email, href: contactLinks.gmail(), target: "_blank" },
+  { icon: MessageCircle, label: "WhatsApp", value: socials.phone, href: contactLinks.whatsapp, target: "_blank" },
+  { icon: Linkedin, label: "LinkedIn", value: socials.linkedinHandle, href: socials.linkedin, target: "_blank" },
+  { icon: Github, label: "GitHub", value: socials.githubHandle, href: socials.github, target: "_blank" },
+  { icon: MapPin, label: "Location", value: profile.location, href: `https://maps.google.com/?q=${encodeURIComponent(profile.location)}`, target: "_blank" },
+];
 
 export const Contact = () => {
-    const [formData, setFormData] = useState({
-        name: "",
-        email: "",
-        message: ""
-    })
-    const [isLoading, setIsLoading] = useState(false)
-    const [submitStatus, setSubmitStatus] = useState({type: null, message: ""})
+  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+  const [isLoading, setIsLoading] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState({ type: null, message: "" });
 
-    const handleSubmit = async (e) => {
-        e.preventDefault()
-        setIsLoading(true)
-        setSubmitStatus({type: null, message: ""})
-        
-        try {
-            const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID
-            const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID
-            const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setSubmitStatus({ type: null, message: "" });
 
-            if(!serviceId || !templateId || !publicKey) {
-                throw new Error(
-                    "EmailJS configuration is missing. Please check your environment variables"
-                )
-            }
-            
-            await emailJs.send(serviceId, templateId, {
-                name: formData.name,
-                email: formData.email,
-                message: formData.message,
-            }, publicKey);
+    const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+    const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
-            setSubmitStatus({type: 'success', message: 'Message sent successfully!'})
-            setFormData({name: "", email: "", message: ""})
-        } catch(err) {
-            console.log("EmailJs error:",error);
-            setSubmitStatus({type: 'error', message: 'Failed to send message. Please try again.'})
-        } finally {
-            setIsLoading(false)
-        }
+    try {
+      // No EmailJS keys yet → hand off to Gmail / the visitor's email app, pre-filled
+      if (!serviceId || !templateId || !publicKey) {
+        const subject = `Portfolio enquiry from ${formData.name}`;
+        const body = `${formData.message}\n\n— ${formData.name} (${formData.email})`;
+        const a = document.createElement("a");
+        a.href = contactLinks.gmail(subject, body);
+        a.target = "_blank";
+        a.rel = "noopener noreferrer";
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        setSubmitStatus({
+          type: "handoff",
+          message: "Your message is ready — send it from Gmail or your email app:",
+          gmail: contactLinks.gmail(subject, body),
+          mailto: contactLinks.mailto(subject, body),
+        });
+        return;
+      }
+
+      await emailJs.send(
+        serviceId,
+        templateId,
+        { name: formData.name, email: formData.email, message: formData.message },
+        publicKey
+      );
+      setSubmitStatus({ type: "success", message: "Message sent successfully! I'll get back to you soon." });
+      setFormData({ name: "", email: "", message: "" });
+    } catch (err) {
+      console.error("EmailJS error:", err);
+      setSubmitStatus({ type: "error", message: "Failed to send message. Please email me directly." });
+    } finally {
+      setIsLoading(false);
     }
+  };
 
-    return (
-        <section id="Contact" className="py-32 relative overflow-hidden">
-            <div className="absolute top-0 left-0 w-full h-full">
-                <div className="absolute top-1/4 left-1/4 w-96 bg-primary/5 rounded-full blur-3xl"/>
-                <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-highlight/5 rounded-full blur-3xl"/>
-            </div>
+  const inputCls =
+    "w-full px-4 py-3 bg-surface rounded-xl border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all";
 
-            <div className="container mx-auto px-6 relative z-10">
-                {/* section header */}
-                <div className="text-center max-w-3xl mx-auto mb-16">
-                    <span className="text-secondary-foreground text-sm font-medium tracking-wider uppercase">
-                        Get in touch
-                    </span>
-                    <h2 className="text-4xl md:text-5xl font-bold mt-4 mb-6 animate-fade-in text-secondary-foreground">
-                        Lets build{" "}
-                        <span className="font-serif italic font-normal text-white">
-                            something great
-                        </span>
-                    </h2>
-                    <p className="text-muted-foreground animate-fade-in animation-delay-400 max-w-2xl mx-auto">
-                        Have a project in mind? I would love to hear about it. Send me a message and we can discuss how we can work together
-                    </p>
+  return (
+    <section id="contact" className="py-28 relative overflow-hidden">
+      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
+      <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-highlight/5 rounded-full blur-3xl" />
+
+      <div className="container mx-auto px-6 relative z-10">
+        <SectionHeader
+          eyebrow="Get in touch"
+          title="Let's build something"
+          italic="together"
+          subtitle="Hiring for a backend or AI engineering role, or have a project in mind? Send a message — I'd love to hear about it."
+          center
+        />
+
+        <div className="grid lg:grid-cols-2 gap-12 max-w-5xl mx-auto">
+          <div className="glass p-8 rounded-3xl border border-primary/30">
+            <form className="space-y-6" onSubmit={handleSubmit}>
+              <div>
+                <label htmlFor="name" className="block text-sm font-medium mb-2">Name</label>
+                <input id="name" type="text" required placeholder="Your name…" value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })} className={inputCls} />
+              </div>
+              <div>
+                <label htmlFor="email" className="block text-sm font-medium mb-2">Email</label>
+                <input id="email" type="email" required placeholder="your@email.com" value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })} className={inputCls} />
+              </div>
+              <div>
+                <label htmlFor="message" className="block text-sm font-medium mb-2">Message</label>
+                <textarea id="message" rows={5} required placeholder="Your message…" value={formData.message}
+                  onChange={(e) => setFormData({ ...formData, message: e.target.value })} className={`${inputCls} resize-y`} />
+              </div>
+              <button
+                type="submit"
+                disabled={isLoading}
+                className="w-full inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-60 h-12 rounded-full font-medium transition-all"
+              >
+                {isLoading ? "Sending…" : "Send message"}
+                <Send className="w-4 h-4" />
+              </button>
+              {submitStatus.type === "handoff" && (
+                <div className="p-4 rounded-xl bg-primary/10 border border-primary/30 text-sm space-y-3">
+                  <p>{submitStatus.message}</p>
+                  <div className="flex flex-wrap gap-2">
+                    <a href={submitStatus.gmail} target="_blank" rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary text-primary-foreground hover:bg-primary/90">
+                      <Mail className="w-4 h-4" /> Open in Gmail
+                    </a>
+                    <a href={submitStatus.mailto} target="_top"
+                      className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-surface hover:bg-primary/20">
+                      Other email app
+                    </a>
+                  </div>
+                  <p className="text-xs text-muted-foreground">Or write directly to {socials.email}</p>
                 </div>
-
-                <div className="grid lg:grid-cols-2 gap-12 max-w-5xl mx-auto">
-                    <div className="glass p-8 rounded-3xl border border-primary/30 animate-fade-in animation-delay-300">
-                        <form className="space-y-6" onSubmit={handleSubmit}>
-                            <div>
-                                <label htmlFor="name" className="block text-sm font-medium mb-2 text-foreground">
-                                    Name
-                                </label>
-                                <input 
-                                    id="name"
-                                    type="text" 
-                                    required
-                                    placeholder="Your name..."
-                                    value={formData.name}
-                                    onChange={(e) => setFormData({...formData, name: e.target.value})}
-                                    className="w-full px-4 py-3 bg-surface rounded-xl border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all" 
-                                />
-                            </div>
-
-                            <div>
-                                <label htmlFor="email" className="block text-sm font-medium mb-2 text-foreground">
-                                    Email
-                                </label>
-                                <input 
-                                    type="email" 
-                                    required
-                                    placeholder="your@email.com"
-                                    value={formData.email}
-                                    onChange={(e) => setFormData({...formData, email: e.target.value})}
-                                    className="w-full px-4 py-3 bg-surface rounded-xl border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
-                                />
-                            </div>
-
-                            <div>
-                                <label htmlFor="message" className="block text-sm font-medium mb-2 text-foreground">
-                                    Message
-                                </label>
-                                <textarea
-                                    id="message"
-                                    rows={5}
-                                    required
-                                    placeholder="Your message..."
-                                    value={formData.message}
-                                    onChange={(e) => setFormData({...formData, message: e.target.value})}
-                                    className="w-full px-4 py-3 bg-surface rounded-xl border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all resize-vertical" 
-                                />
-                            </div>
-                            <button className="w-full liquid-glass h-12 text-sm italic text-muted-foreground hover:text-foreground hover:shadow-lg rounded-full font-medium px-6 py-3" type="submit" disabled={isLoading}>
-                                Send message
-                                <Send className="w-4 h-4 ml-1"/>
-                            </button>
-                            {submitStatus.message && (
-                                <div className={`p-3 rounded-xl ${
-                                    submitStatus.type === 'success' ? 'bg-green-500/10 border border-green-500/30 text-green-400' : 
-                                    'bg-destructive/10 border border-destructive/30 text-destructive'
-                                }`}>
-                                    {SubmitEvent.type ==="sucess" ? (
-                                        <CheckCircle className="w-5 h-5 flex-shrink-0"/>
-                                    ):(
-                                        <AlertCircle className="w-5 h-5 flex-shrink-0"/>
-                                    )}
-                                    {submitStatus.message}
-                                </div>
-                            )}
-                        </form>
-                    </div>
-                    
-                    <div className="space-y-6 animate-fade-in animation-delay-500 lg:pl-12">
-                        {contactInfo.map((contact, idx) => (
-                            <div key={idx} className="flex items-start gap-4 p-6 glass hover:bg-surface hover:shadow-lg rounded-2xl transition-all duration-300 cursor-pointer group">
-                                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0 mt-1 group-hover:bg-primary/20 transition-all">
-                                    <contact.icon className="w-6 h-6 text-primary group-hover:-rotate-12 transition-transform duration-300" />
-                                </div>
-                                <div className="grow">
-                                    <h3 className="font-semibold text-foreground mb-1">{contact.label}</h3>
-                                    <a href={contact.href} className="text-muted-foreground hover:text-primary transition-colors block text-sm group-hover:underline">
-                                        {contact.value}
-                                    </a>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
+              )}
+              {submitStatus.message && submitStatus.type !== "handoff" && (
+                <div
+                  className={`flex items-center gap-2 p-3 rounded-xl text-sm ${
+                    submitStatus.type === "success"
+                      ? "bg-green-500/10 border border-green-500/30 text-green-400"
+                      : "bg-red-500/10 border border-red-500/30 text-red-400"
+                  }`}
+                >
+                  {submitStatus.type === "success" ? (
+                    <CheckCircle className="w-5 h-5 flex-shrink-0" />
+                  ) : (
+                    <AlertCircle className="w-5 h-5 flex-shrink-0" />
+                  )}
+                  {submitStatus.message}
                 </div>
+              )}
+            </form>
+          </div>
+
+          <div className="grid sm:grid-cols-2 gap-4 content-start">
+            <div className="sm:col-span-2 p-5 glass rounded-2xl border border-primary/30">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
+                  <Phone className="w-6 h-6 text-primary" />
+                </div>
+                <div>
+                  <h3 className="font-semibold">Call · tap to ring</h3>
+                  <p className="text-xs text-muted-foreground">Opens your phone's dialer with the number ready</p>
+                </div>
+              </div>
+              <CallPanel />
             </div>
-        </section>
-    )
-}
+            {contactInfo.map((c) => (
+              <a
+                key={c.label}
+                href={c.href}
+                target={c.target}
+                rel="noopener noreferrer"
+                className="flex items-center gap-4 p-5 glass hover:bg-surface rounded-2xl transition-all duration-300 group"
+              >
+                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-all">
+                  <c.icon className="w-6 h-6 text-primary group-hover:-rotate-12 transition-transform duration-300" />
+                </div>
+                <div className="min-w-0">
+                  <h3 className="font-semibold">{c.label}</h3>
+                  <p className="text-muted-foreground group-hover:text-primary transition-colors text-sm truncate">{c.value}</p>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};

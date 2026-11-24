@@ -11,8 +11,8 @@
   --color-secondary:#1f2830;
   --color-secondary-foreground:#20b2a6;
 
-  --color-muted:252e37;
-  --color-muted-foreground:#7a8491;
+  --color-muted:#252e37;
+  --color-muted-foreground:#8a94a1;
 
   --color-border:#242b32;
 
@@ -25,6 +25,7 @@
 @layer base{
   html{
     scroll-behavior: smooth;
+    scroll-padding-top: 80px;
 
   }
   body {
@@ -148,7 +149,7 @@
   }
 
   @keyframes float{
-    0%
+    0%,
     100%{
       transform:translateY(0);
     }
@@ -165,10 +166,10 @@
     animation: float 2s ease-in-out infinite;
   }
 
-  .animate-delay-100{
+  .animation-delay-100{
     animation-delay:100ms;
   }
-  .animaton-delay-200{
+  .animation-delay-200{
     animation-delay:200ms;
   }
   .animation-delay-300{
@@ -201,15 +202,73 @@
   }
 
   .animation-border:hover{
-    background-color:color-mix(in srgb,#26c4b8 15%, transparent);
+    background-color:color-mix(in srgb,var(--color-primary) 15%, transparent);
     backdrop-filter: blur(16px);
-    box-shadow: 0 0 20px color-mix(in srgb, #26c4b8 20%, transparent);
+    box-shadow: 0 0 20px color-mix(in srgb, var(--color-primary) 20%, transparent);
   }
 
   .timeline-glow{
     box-shadow: 0 0 40px
     color-mix(in srgb, var(--color-primary)35%, transparent),
-    0 0 80px color-mix(in srgb, var(--color-primary)255, transparent);
+    0 0 80px color-mix(in srgb, var(--color-primary) 25%, transparent);
   }
-}
 
+  /* faint data-grid background */
+  .data-grid{
+    background-image:
+      linear-gradient(color-mix(in srgb, var(--color-primary) 8%, transparent) 1px, transparent 1px),
+      linear-gradient(90deg, color-mix(in srgb, var(--color-primary) 8%, transparent) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+  }
+
+  @keyframes marquee{
+    from{ transform: translateX(0); }
+    to{ transform: translateX(-50%); }
+  }
+  .animate-marquee{ animation: marquee 35s linear infinite; }
+  .animate-marquee:hover{ animation-play-state: paused; }
+  .marquee-mask{
+    mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
+  }
+
+  @keyframes bar-grow{
+    from{ transform: scaleY(0); }
+    to{ transform: scaleY(1); }
+  }
+  .bar-grow{
+    transform-origin: bottom;
+    animation: bar-grow 0.9s cubic-bezier(0.4, 0, 0.2, 1) both;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation: none !important; scroll-behavior: auto !important; }
+  }
+
+  /* hero background image */
+  .hero-bg{
+    background-image: url("/hero-bg.jpg");
+    background-size: cover;
+    background-position: center;
+  }
+  .hero-fade{
+    background:
+      linear-gradient(90deg, var(--color-background) 0%, color-mix(in srgb, var(--color-background) 80%, transparent) 45%, color-mix(in srgb, var(--color-background) 40%, transparent) 100%),
+      linear-gradient(180deg, color-mix(in srgb, var(--color-background) 50%, transparent) 0%, transparent 35%, var(--color-background) 100%);
+  }
+  @media (max-width: 1023px){
+    .hero-fade{
+      background: linear-gradient(180deg, color-mix(in srgb, var(--color-background) 70%, transparent) 0%, color-mix(in srgb, var(--color-background) 85%, transparent) 50%, var(--color-background) 100%);
+    }
+  }
+
+  /* glowing divider line */
+  .ribbon-line{
+    height:1px;
+    background: linear-gradient(90deg, transparent, var(--color-primary), var(--color-highlight), var(--color-primary), transparent);
+    opacity:.5;
+  }
+
+  @keyframes modal-in{ from{opacity:0} to{opacity:1} }
+  .animate-modal-in{ animation: modal-in .25s ease-out both; }
+}
