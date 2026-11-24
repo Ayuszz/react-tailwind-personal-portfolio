@@ -9,11 +9,12 @@ export const profile = {
   initials: "AM",
   role: "Software Engineer · AI & LLM Applications · Backend",
   photo: "./ayush.jpg", // set to null to show an initials avatar
+  introPhoto: "./ayush-face.jpg", // close-up used in the intro circle
   resume: "./Ayush_Mohanty_CV.pdf",
   resumeFileName: "Ayush_Mohanty_CV.pdf",
   location: "Bangalore, India",
   availability: "Open to opportunities",
-  experienceBadge: { value: "1+ yr", label: "Building backend & AI" },
+  experienceBadge: { value: "7 months", label: "Building backend & AI" },
   headline: {
     before: "Building",
     highlight: "AI‑powered",
@@ -37,7 +38,7 @@ export const socials = {
 
 // Headline numbers shown in the strip under the hero
 export const impactStats = [
-  { value: "1+ yr", label: "Production backend", detail: "Node.js, PostgreSQL & Redis APIs at Zino" },
+  { value: "7 mo", label: "Production backend", detail: "Node.js, PostgreSQL & Redis APIs at Zino" },
   { value: "3", label: "LLM providers integrated", detail: "OpenAI, Anthropic Claude & Google Gemini" },
   { value: "2", label: "MCP servers shipped", detail: "semantic search & live startup map" },
   { value: "26", label: "Automated tests", detail: "real, un-mocked MCP end-to-end suite" },
@@ -52,7 +53,7 @@ export const about = {
   title: "Backend engineer who",
   titleItalic: "ships with AI",
   paragraphs: [
-    "I'm a software engineer with 1+ year of experience building backend APIs, workflow automation and ETL pipelines using Node.js, PostgreSQL and Redis — currently an Associate SDE at Zino Technology, working on a low-code workflow and API engine.",
+    "I'm a software engineer with 7 months of experience building backend APIs, workflow automation and ETL pipelines using Node.js, PostgreSQL and Redis — currently an Associate SDE at Zino Technology, working on a low-code workflow and API engine.",
     "On the AI side I work with LLM APIs (OpenAI, Anthropic Claude, Google Gemini): prompt and system-prompt design, tool/function calling, structured JSON outputs, and — just as important — writing test cases that check AI output for accuracy and cut hallucinations.",
     "I use Claude, ChatGPT and Cursor every day, and I'm looking to build and ship AI-powered products end to end — from the API and the database to the model call and the UI.",
   ],
@@ -285,8 +286,8 @@ export const projects = [
     icon: "Layout",
     image: null,
     description:
-      "This portfolio — built with React and Tailwind CSS, deployed on Vercel. All content lives in a single config file, with project case studies, a contact menu and a one-click CV download.",
-    result: "Config-driven, responsive, deployed on Vercel",
+      "This portfolio — built with React and Tailwind CSS, deployed on Vercel. A cinematic intro trailer with falling cards and a shattering glass pane, a purple glass theme, project case studies and a single config file for all content.",
+    result: "Cinematic intro · glass theme · config-driven",
     tags: ["React.js", "Tailwind CSS", "Vite", "Vercel"],
     github: "https://github.com/Ayuszz/react-tailwind-personal-portfolio",
     live: "https://react-tailwind-personal-portfolio-u.vercel.app/",
@@ -295,7 +296,8 @@ export const projects = [
         "A fast, good-looking portfolio that is easy to keep up to date — updating it after a new CV should be a single-file edit.",
       dataset: "All text, links, projects and skills are kept in src/portfolio.config.js.",
       steps: [
-        { title: "Design system", text: "Dark glassmorphism theme with Tailwind CSS v4 tokens, animated borders and subtle motion that respects reduced-motion settings." },
+        { title: "Design system", text: "Purple spider-lily backdrop with frosted-glass panels, built on Tailwind CSS v4 tokens, with motion that respects reduced-motion settings." },
+        { title: "Cinematic intro", text: "A ~17s trailer: taglines, name reveal, stack flash, counting stats, then 24 cards fall into place while a glass pane cracks — and shatters to reveal the site." },
         { title: "Config-driven content", text: "Every section reads from one config file, so content changes never touch components." },
         { title: "Interactions", text: "Contact menu (email, WhatsApp, call with copy fallback), CV download, expandable tools list and project case-study popups." },
         { title: "Deploy", text: "Built with Vite and deployed on Vercel, redeploying automatically on every push to GitHub." },
@@ -366,4 +368,14 @@ export const contactLinks = {
 // Absolute URL of the CV so it opens correctly from any host
 export const resumeUrl = () => {
   try { return new URL(profile.resume, window.location.href).href; } catch { return profile.resume; }
+};
+
+// ── Intro "movie trailer" shown on first visit (set enabled: false to turn off) ──
+export const trailer = {
+  enabled: true,
+  taglines: ["Every product needs a backend.", "Every AI needs guardrails."],
+  introducing: "Introducing",
+  // words flashed rapidly on screen
+  flash: ["Node.js", "PostgreSQL", "Redis", "LLM APIs", "MCP", "Tool Calling", "React"],
+  finalLine: "Now showing",
 };

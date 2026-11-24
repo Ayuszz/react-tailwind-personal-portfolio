@@ -26,7 +26,6 @@ export const Hero = () => {
   return (
     <section id="top" className="relative min-h-screen flex items-center overflow-hidden">
       {/* background: spider lilies */}
-      <div className="absolute inset-0 hero-bg opacity-40" />
       <div className="absolute inset-0 hero-fade" />
 
       {/* drifting dots */}

@@ -7,7 +7,7 @@ export const AnimatedBorderButton = ({ href, fileName = true, label = "Download 
       download={fileName}
       target="_blank"
       rel="noopener noreferrer"
-      className="group relative inline-flex bg-transparent shadow-[0_0_25px_rgba(32,178,166,0.45)]
+      className="group relative inline-flex bg-transparent shadow-[0_0_25px_rgba(169,112,255,0.45)]
        text-foreground hover:text-primary transition-all duration-300
        focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2
        px-8 py-3 text-base font-medium rounded-full overflow-visible"

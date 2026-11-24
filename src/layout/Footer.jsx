@@ -22,6 +22,13 @@ export const Footer = () => (
             <s.icon className="w-5 h-5" />
           </a>
         ))}
+        <button
+          type="button"
+          onClick={() => window.dispatchEvent(new Event("replay-intro"))}
+          className="px-3 py-2 rounded-full glass text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer"
+        >
+          ▶ Replay intro
+        </button>
         <a href="#top" aria-label="Back to top" className="p-2 rounded-full bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground transition-colors ml-2">
           <ArrowUp className="w-5 h-5" />
         </a>
