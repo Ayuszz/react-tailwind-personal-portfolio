@@ -3,16 +3,8 @@ import { Navbar } from "./layout/Navbar";
 import { IntroTrailer } from "./components/IntroTrailer";
 import { trailer } from "./portfolio.config";
 
-// Play the intro on every page load (including refresh).
-// Skipped for people whose device asks for reduced motion.
-const shouldPlayIntro = () => {
-  if (!trailer.enabled || typeof window === "undefined") return false;
-  try {
-    return !window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
-  } catch {
-    return true;
-  }
-};
+// Play the intro on every page load (including refresh), on every device.
+const shouldPlayIntro = () => trailer.enabled && typeof window !== "undefined";
 import { Footer } from "./layout/Footer";
 import { Hero } from "./sections/Hero";
 import { Impact } from "./sections/Impact";

@@ -254,7 +254,8 @@
   }
 
   @media (prefers-reduced-motion: reduce){
-    *{ animation: none !important; scroll-behavior: auto !important; }
+    *:not([data-intro]):not([data-intro] *){ animation: none !important; }
+    html{ scroll-behavior: auto !important; }
   }
 
   /* hero background image */

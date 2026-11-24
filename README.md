@@ -26,7 +26,7 @@ A personal developer portfolio with a **cinematic intro trailer**: falling cards
 
 ## Highlights
 
-- 🎬 **Movie-trailer intro.** About 17 seconds, full-screen on phones, tablets, laptops and wide monitors. It plays on every load or refresh. You can skip it with a button or with Esc, Enter or Space, and replay it from the footer.
+- 🎬 **Movie-trailer intro.** About 17 seconds, full-screen on phones, tablets, laptops and wide monitors. It plays on every load or refresh, on every device. You can skip it with a button or with Esc, Enter or Space, and replay it from the footer.
 - 🧩 **Falling-card build.** All 24 cards from the site (About, strengths, experience, projects, skills, education, contact, CV) drop from the top in random order and land with a bounce.
 - 🪟 **Glass pane that cracks, then shatters.** Each landing card adds cracks to the glass. When the board is complete, the pane breaks into 48 shards that tumble away in 3D to reveal the portfolio.
 - 💜 **Purple frosted-glass theme.** A fixed spider-lily backdrop sits behind the whole site, with blurred-glass cards, a lavender accent and glowing highlights.
@@ -172,7 +172,7 @@ Open **`src/portfolio.config.js`**. Components only read from this file, so a ne
 - **Change the glass:** in `components/glass.js`, `RAYS` and `RADII` control the crack pattern and the number of shards.
 - **Change the shatter look:** the `.tr-shard`, `.tr-crack` and `.tr-burst` styles are in `index.css`.
 
-The intro plays on every page load. Users can skip it any time, and the footer has **▶ Replay intro**.
+The intro plays on every page load and on every device. Users can skip it any time, and the footer has **▶ Replay intro**.
 
 ---
 
@@ -218,7 +218,7 @@ To deploy a fork: go to vercel.com → **Add New → Project** → import the re
 
 ## Accessibility & performance
 
-- **Reduced motion:** visitors whose device has *Reduce motion* turned on skip the intro automatically, and other animations are disabled.
+- **Reduced motion:** the intro plays on every device, including phones with *Reduce motion* or *Remove animations* turned on (it can always be skipped). For those visitors, the site's other decorative animations are switched off.
 - **Keyboard:** Esc, Enter or Space skips the intro. Popups close with Esc, and buttons have visible focus.
 - **No heavy libraries:** the animations are CSS transforms and opacity only, so they run on the GPU.
 - **Phones:** the intro uses `100dvh` and safe-area padding, so it fills the screen on phones with browser bars and notches.
@@ -231,6 +231,7 @@ To deploy a fork: go to vercel.com → **Add New → Project** → import the re
 |---|---|
 | Old photo or old version still showing | Hard refresh: Ctrl+Shift+R, or pull to refresh on a phone |
 | Download CV or Call don't work in a preview tool | Sandboxed previews block downloads and `tel:` links. They work on the real Vercel site. |
+| Intro doesn't play on a phone | Hard refresh. The intro plays on all devices, including phones with reduce-motion turned on. |
 | Intro feels too long | Lower the `SCENES` timings or `DROP_STEP`, or set `trailer.enabled = false` |
 | Contact form only opens Gmail | Add the EmailJS environment variables in Vercel and redeploy |
 

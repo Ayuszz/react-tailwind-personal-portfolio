@@ -215,7 +215,7 @@ export const IntroTrailer = ({ onDone }) => {
   const elapsed = SCENES.slice(0, idx).reduce((a, s) => a + s.ms, 0);
 
   return (
-    <div className={`fixed inset-0 z-[200] h-[100dvh] w-screen ${revealing ? "pointer-events-none" : ""}`} aria-label="Intro" role="presentation">
+    <div className={`fixed inset-0 z-[200] h-[100dvh] w-screen ${revealing ? "pointer-events-none" : ""}`} aria-label="Intro" role="presentation" data-intro>
       {/* the glass pane: seamless until it shatters at the end, revealing the site */}
       <div className="absolute inset-0" style={{ perspective: "1200px" }}>
         {shards.map((sh, i) => (
